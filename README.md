@@ -7,8 +7,10 @@ WY22 Scott Creek Lagoon Bathymetric Survey
     Purpose</a>
 -   <a href="#workflow-summary" id="toc-workflow-summary">Workflow
     Summary</a>
-    -   <a href="#1-fieldwork-notes" id="toc-1-fieldwork-notes">1. Fieldwork
-        Notes</a>
+    -   <a href="#dataset-descriptions" id="toc-dataset-descriptions">Dataset
+        Descriptions</a>
+-   <a href="#1-fieldwork-notes" id="toc-1-fieldwork-notes">1. Fieldwork
+    Notes</a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -64,19 +66,82 @@ here\].
 
 <br>
 
-**Dataset Descriptions**
+# Workflow Summary
+
+The gernal workflow is to:
+
+1.  Collect topo and echo sounder points.
+
+2.  Extract data R10s (L. Harrison helped with this) and correct raw
+    data with OPUS correction (raw base station file submitted to OPUS
+    and then apply correction to all points).
+
+3.  Correct echosounder points to account for WSE (instrument is
+    partially in the water so depth needs to be added to depth points).
+
+4.  Remove bad topo points and echo points that are too shallow or have
+    low accuracy.
+
+5.  Calculate bed surface elevation (BSE) from echosunder points (Note:
+    topo points are corrected in step 2).
+
+6.  Calculate WSE from topo points.
+
+7.  Join topo and echosounder BSE points.
+
+8.  Convert BSE points into TIN layer(in ArcMap).
+
+9.  Convert TIN to raster layer.
+
+10. TBD - Compair WY22 layer to ESA Dec 2016 (WY17) layer. Raster or TIN
+    differencing.
+
+<br>
+
+## Dataset Descriptions
 
 The <span style="color:purple">*Data*</span> folder contains the rtk
-datasets used..
+datasets used…
 
 1.  The <span style="color:purple">*XXX.csv*</span> datafile consists of
     XXX.
 
 <br>
 
-# Workflow Summary
-
-## 1. Fieldwork Notes
+# 1. Fieldwork Notes
 
 On 30 August 2022, the Scott Creek crew surveyed the lagoon habitat with
-three RTK units (Trimble R10’s).
+three RTK units (Trimble R10’s). Each unit has its own raw data file
+(desribed above) which are used in the workflow (steps above).
+
+-   Units: US Survey Ft. Horizontal Datum: US State Plane NAD83 CA
+    Zone 3. Vertical Datum: Conus GEOID12A.
+
+-   Survey extent: Beach to Queseria Creek confluence. Most topo points
+    are from the north marsh area to the beach. Echosounder points
+    focused in main channel from the beach (downstream side of HWY 1
+    bridge) to Queseria Creek confluence.
+
+-   Blue Unit - Base station.
+
+    -   Settup on ESA CP02 and ran for 8 hours (for OPUS correction).
+    -   Antenna height to quick release = 4.130 ft (1.5m).
+    -   Job Name: Scott_blue_220830.
+
+-   Green Unit - Rover collecting topo points (water surface edge (WSE),
+    levy, topo points.
+
+    -   Antenna height to quick release = 6.560 ft (2.0m).
+    -   Shot to ESA CP01 for check point. Started topo survey at point
+        \#5.
+    -   Raw Data Corrections:
+        -   Change point code from WSE to topo for points 108,109, 163,
+            and 164.
+        -   Delete points 337 and 345.
+    -   At point 334 we focused on WS Edge points and used a single pole
+        (antenna height to quick release = 3.42 ft).
+
+-   Red Unit - Rover collecting echosounder points (Sonarmite; water
+    points/ areas with depth).
+
+    -   
