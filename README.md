@@ -70,12 +70,12 @@ here\].
 
 # Workflow Summary
 
-The gernal workflow is to:
+The general workflow is:
 
 1.  Collect topo and echo sounder points.
 
-2.  Extract data R10s (L. Harrison helped with this) and correct raw
-    data with OPUS correction.
+2.  Extract data from the R10s (L. Harrison helped with this) and
+    correct raw data with an OPUS correction.
 
 3.  Correct echosounder points to account for “draft”.
 
