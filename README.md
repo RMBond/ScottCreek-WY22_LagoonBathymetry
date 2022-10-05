@@ -9,10 +9,9 @@ WY22 Scott Creek Lagoon Bathymetric Survey
     Summary</a>
     -   <a href="#dataset-descriptions" id="toc-dataset-descriptions">Dataset
         Descriptions</a>
--   <a href="#1-fieldwork-notes" id="toc-1-fieldwork-notes">1. Fieldwork
-    Notes</a>
--   <a href="#2-opus-correction" id="toc-2-opus-correction">2. OPUS
-    Correction</a>
+-   <a href="#1-field-notes" id="toc-1-field-notes">1. Field Notes</a>
+-   <a href="#2-raw-data-corrections" id="toc-2-raw-data-corrections">2. Raw
+    Data Corrections</a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -100,19 +99,43 @@ The general workflow is:
 
 ## Dataset Descriptions
 
-The <span style="color:purple">*Data*</span> folder contains the rtk
-datasets used…
+The <span style="color:purple">*Data*</span> folder contains all of the
+rtk datasets used in this repository.
 
-1.  The <span style="color:purple">*XXX.csv*</span> datafile consists of
-    XXX.
+Base Station Files:
+
+1.  The <span style="color:purple">*SC_blue_220830.csv*</span> datafile
+    contiants the uncorrected base station point.
+
+2.  The <span style="color:purple">*72772420.o*</span> datafile is the
+    base station RINEX file that was submitted to OPUS.
+
+Rover Files:
+
+3.  The <span style="color:purple">*SC_grn_220830.csv*</span> datafile
+    consists of the raw green rover topo points.
+
+4.  The <span style="color:purple">*SC_red_220830_withdepth.csv*</span>
+    datafile consists of the raw red rover topo and echosounder points.
+    The depth field was extracted by L. Harrison using Trimble Business
+    Center software.
+
+Other Files:
+
+5.  The <span style="color:purple">*XXX*</span> datafile
 
 <br>
 
-# 1. Fieldwork Notes
+# 1. Field Notes
 
 On 30 August 2022, the Scott Creek crew surveyed the lagoon habitat with
 three RTK units (Trimble R10’s). Each unit has its own raw data file
-(desribed above) which are used in the workflow (steps above).
+(desribed above) which are used in the workflow (steps above). A
+google-drive folder with a scan of the field notebook and photos can be
+found
+[here](https://drive.google.com/drive/folders/1rpwhRYAWUH1Ks09bCyMU0wZEBVVKS9QF?usp=sharing).
+
+Survey Notes:
 
 -   Survey Units: US Survey Ft;
 
@@ -174,10 +197,32 @@ three RTK units (Trimble R10’s). Each unit has its own raw data file
     a typical elevation and the lagoon was filled in with sediment so
     the water went on the marshplain.
 
-# 2. OPUS Correction
+<br>
 
-(raw base station file submitted to OPUS and then apply correction to
-all points)
+# 2. Raw Data Corrections
+
+Goal: Correct raw data with OPUS correction.
+
+When starting the base station we used a “here” point; meaning we let
+the base station decide where it was “on the fly”. The raw base station
+file was extracted from the base station, converted to a RINEX file
+(<span style="color:purple">*Data/OPUS/72772420.o*</span>) and submitted
+to [OPUS](https://geodesy.noaa.gov/OPUS/). A pdf of the OPUS output can
+be found in the Data Folder.
+
+Opus Output Notes:
+
+-   The output uses the same State Plane CA Zone 3 datum as the previous
+    survey however the output was in meters not feet. Output coordinates
+    were reprojected in ArcMap from meters to US Survey Feet.
+
+-   The output uses GEOID18 while our survey used GEOID12A. It turns out
+    the difference in ellipsoid height for this area is only one
+    centemeter. So one centememter was added to the ORTHO HGT to correct
+    for this difference (GEOID12A corrected ortho height = 8.382 meters
+    = 27.5ft).
+
+<br>
 
 3.  Correct echosounder point depths to account for “draft”.
 
