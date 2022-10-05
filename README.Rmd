@@ -51,9 +51,9 @@ The general workflow is:
 
 7. Convert BSE points into TIN layer(in ArcMap).
 
-8. Convert TIN to raster layer.
+8. Convert TIN to raster layer (in ArcMap).
 
-9. TBD - Compair WY22 layer to ESA Dec 2016 (WY17) layer. Raster or TIN differencing. 
+9. TBD - Compair WY22 layer to ESA Dec 2016 layer. Raster or TIN differencing (in ArcMap? or R?). 
 
 <br>
 
@@ -72,9 +72,13 @@ The <span style="color:purple">*Data*</span> folder contains the rtk datasets us
 
 On 30 August 2022, the Scott Creek crew surveyed the lagoon habitat with three RTK units (Trimble R10's). Each unit has its own raw data file (desribed above) which are used in the workflow (steps above). 
 
-* Survey Units: US Survey Ft; Horizontal Datum: US State Plane NAD83 CA Zone 3; Vertical Datum: Conus GEOID12A.
+* Survey Units: US Survey Ft; 
 
-* Survey extent: Scott Creek State Beach inland to Queseria Creek confluence. Most topo points are from the beach to the north marsh area (to the beach)bad signal starting around the PIT antenna). Echosounder points focused on the main channel from the beach (downstream side of Hwy 1 bridge) to Queseria Creek confluence. 
+* Horizontal Datum: US State Plane NAD83 CA Zone 3
+
+* Vertical Datum: Conus GEOID12A.
+
+* Survey extent: Scott Creek State Beach inland to Queseria Creek confluence. Most topo points are from the beach to the north marsh area (bad signal starting around the Lagoon PIT antenna array). Echosounder points focused on the main channel from the beach (downstream side of Hwy 1 bridge) to Queseria Creek confluence. 
 
 * Blue Unit - Base station.
     + Settup on ESA CP02 and ran for 8 hours (for OPUS correction). 

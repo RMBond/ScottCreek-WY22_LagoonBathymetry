@@ -1,6 +1,6 @@
 WY22 Scott Creek Lagoon Bathymetric Survey
 ================
-03 October, 2022
+05 October, 2022
 
 -   <a href="#introduction" id="toc-introduction">Introduction</a>
 -   <a href="#readme-file-purpose" id="toc-readme-file-purpose">Readme File
@@ -91,10 +91,10 @@ The general workflow is:
 
 8.  Convert BSE points into TIN layer(in ArcMap).
 
-9.  Convert TIN to raster layer.
+9.  Convert TIN to raster layer (in ArcMap).
 
-10. TBD - Compair WY22 layer to ESA Dec 2016 (WY17) layer. Raster or TIN
-    differencing.
+10. TBD - Compair WY22 layer to ESA Dec 2016 layer. Raster or TIN
+    differencing (in ArcMap? or R?).
 
 <br>
 
@@ -114,12 +114,15 @@ On 30 August 2022, the Scott Creek crew surveyed the lagoon habitat with
 three RTK units (Trimble R10’s). Each unit has its own raw data file
 (desribed above) which are used in the workflow (steps above).
 
--   Survey Units: US Survey Ft; Horizontal Datum: US State Plane NAD83
-    CA Zone 3; Vertical Datum: Conus GEOID12A.
+-   Survey Units: US Survey Ft;
+
+-   Horizontal Datum: US State Plane NAD83 CA Zone 3
+
+-   Vertical Datum: Conus GEOID12A.
 
 -   Survey extent: Scott Creek State Beach inland to Queseria Creek
     confluence. Most topo points are from the beach to the north marsh
-    area (to the beach)bad signal starting around the PIT antenna).
+    area (bad signal starting around the Lagoon PIT antenna array).
     Echosounder points focused on the main channel from the beach
     (downstream side of Hwy 1 bridge) to Queseria Creek confluence.
 
