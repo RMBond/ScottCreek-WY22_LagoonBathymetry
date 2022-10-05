@@ -75,9 +75,9 @@ The general workflow is:
 1.  Collect topo and echo sounder points.
 
 2.  Extract data from the R10s (L. Harrison helped with this) and
-    correct raw data with an OPUS correction.
+    correct raw data with OPUS output.
 
-3.  Correct echosounder points to account for “draft”.
+3.  Correct echosounder point depths to account for “draft”.
 
 4.  Remove bad topo points and echo points that are too shallow or have
     low accuracy.
@@ -121,10 +121,11 @@ three RTK units (Trimble R10’s). Each unit has its own raw data file
 -   Vertical Datum: Conus GEOID12A.
 
 -   Survey extent: Scott Creek State Beach inland to Queseria Creek
-    confluence. Most topo points are from the beach to the north marsh
-    area (bad signal starting around the Lagoon PIT antenna array).
-    Echosounder points focused on the main channel from the beach
-    (downstream side of Hwy 1 bridge) to Queseria Creek confluence.
+    confluence. Most topo points were collected from the beach to the
+    north marsh area (bad signal starting around the Lagoon PIT antenna
+    array). Echosounder points focused on the main channel from the
+    beach (downstream side of Hwy 1 bridge) to Queseria Creek
+    confluence.
 
 -   Blue Unit - Base station.
 
@@ -178,8 +179,7 @@ three RTK units (Trimble R10’s). Each unit has its own raw data file
 (raw base station file submitted to OPUS and then apply correction to
 all points)
 
-3.  Correct echosounder points to account for WSE (instrument is
-    partially in the water so depth needs to be added to depth points).
+3.  Correct echosounder point depths to account for “draft”.
 
 4.  Remove bad topo points and echo points that are too shallow or have
     low accuracy.
@@ -193,4 +193,7 @@ all points)
 
 8.  Convert BSE points into TIN layer(in ArcMap).
 
-9.  Convert TIN to raster layer.
+9.  Convert TIN to raster layer (in ArcMap).
+
+10. TBD - Compair WY22 layer to ESA Dec 2016 layer. Raster or TIN
+    differencing (in ArcMap? or R?).

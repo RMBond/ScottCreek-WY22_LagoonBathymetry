@@ -37,23 +37,23 @@ The general workflow is:
 
 1. Collect topo and echo sounder points.
 
-2. Extract data from the R10s (L. Harrison helped with this) and correct raw data with an OPUS correction.
+2. Extract data from the R10s (L. Harrison helped with this) and correct raw data with OPUS output.
 
-3. Correct echosounder points to account for "draft".
+3. Correct echosounder point depths to account for "draft".
 
-3. Remove bad topo points and echo points that are too shallow or have low accuracy.
+4. Remove bad topo points and echo points that are too shallow or have low accuracy.
 
-4. Calculate bed surface elevation (BSE) from echosunder points (Note: topo points are corrected in step 2).
+5. Calculate bed surface elevation (BSE) from echosunder points (Note: topo points are corrected in step 2).
 
-5. Calculate WSE from topo points.
+6. Calculate WSE from topo points.
 
-6. Join topo and echosounder BSE points.
+7. Join topo and echosounder BSE points.
 
-7. Convert BSE points into TIN layer(in ArcMap).
+8. Convert BSE points into TIN layer(in ArcMap).
 
-8. Convert TIN to raster layer (in ArcMap).
+9. Convert TIN to raster layer (in ArcMap).
 
-9. TBD - Compair WY22 layer to ESA Dec 2016 layer. Raster or TIN differencing (in ArcMap? or R?). 
+10. TBD - Compair WY22 layer to ESA Dec 2016 layer. Raster or TIN differencing (in ArcMap? or R?). 
 
 <br>
 
@@ -78,7 +78,7 @@ On 30 August 2022, the Scott Creek crew surveyed the lagoon habitat with three R
 
 * Vertical Datum: Conus GEOID12A.
 
-* Survey extent: Scott Creek State Beach inland to Queseria Creek confluence. Most topo points are from the beach to the north marsh area (bad signal starting around the Lagoon PIT antenna array). Echosounder points focused on the main channel from the beach (downstream side of Hwy 1 bridge) to Queseria Creek confluence. 
+* Survey extent: Scott Creek State Beach inland to Queseria Creek confluence. Most topo points were collected from the beach to the north marsh area (bad signal starting around the Lagoon PIT antenna array). Echosounder points focused on the main channel from the beach (downstream side of Hwy 1 bridge) to Queseria Creek confluence. 
 
 * Blue Unit - Base station.
     + Settup on ESA CP02 and ran for 8 hours (for OPUS correction). 
@@ -121,19 +121,21 @@ On 30 August 2022, the Scott Creek crew surveyed the lagoon habitat with three R
 
 
 
-3. Correct echosounder points to account for WSE (instrument is partially in the water so depth needs to be added to depth points).
+3. Correct echosounder point depths to account for "draft".
 
-3. Remove bad topo points and echo points that are too shallow or have low accuracy.
+4. Remove bad topo points and echo points that are too shallow or have low accuracy.
 
-4. Calculate bed surface elevation (BSE) from echosunder points (Note: topo points are corrected in step 2).
+5. Calculate bed surface elevation (BSE) from echosunder points (Note: topo points are corrected in step 2).
 
-5. Calculate WSE from topo points.
+6. Calculate WSE from topo points.
 
-6. Join topo and echosounder BSE points.
+7. Join topo and echosounder BSE points.
 
-7. Convert BSE points into TIN layer(in ArcMap).
+8. Convert BSE points into TIN layer(in ArcMap).
 
-8. Convert TIN to raster layer.
+9. Convert TIN to raster layer (in ArcMap).
+
+10. TBD - Compair WY22 layer to ESA Dec 2016 layer. Raster or TIN differencing (in ArcMap? or R?).
 
 
 
