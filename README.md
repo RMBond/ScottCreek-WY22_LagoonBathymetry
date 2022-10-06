@@ -1,6 +1,6 @@
 WY22 Scott Creek Lagoon Bathymetric Survey
 ================
-05 October, 2022
+06 October, 2022
 
 -   <a href="#introduction" id="toc-introduction">Introduction</a>
 -   <a href="#workflow-summary" id="toc-workflow-summary">Workflow
@@ -36,21 +36,32 @@ WY22 Scott Creek Lagoon Bathymetric Survey
 
 # Introduction
 
-<img align="Right" width="300" height="300" src="Figures/CZU_perim_SCWatershed_crop_20210426.jpg">
-
-In August 2020, the CZU Lightning Complex fire burned more than 350 km2
+In August 2020, the CZU Lightning Complex fires burned more than 350 km2
 (86,500 acres) of coastal forests and hills in the Santa Cruz Mountains
-region (Red outline in right figure; Santa Cruz and San Mateo counties,
-California). Among the watersheds severely affected by wildfire was
-Scott Creek (Yellow outline in right figure), a small (70 km2) coastal
-basin \~80 km south of San Francisco Bay. The Scott Creek watershed is
-of special management concern as it supports the southernmost extant
-population of coho salmon (*Oncorhynchus kisutch*; Central California
-Coast \[CCC\] evolutionarily significant unit) in North America, as well
-as federally threatened CCC steelhead (anadramous *O. mykiss*). Scott
-Creek is also the location of a salmonid life cycle monitoring station
-operated jointly by NOAA’s Southwest Fisheries Science Center ([FED
-project
+region (Santa Cruz and San Mateo counties, California). Among the
+watersheds severely affected by wildfire was Scott Creek, a small (70
+km2) coastal basin \~80 km south of San Francisco Bay.
+
+<center>
+
+<figure>
+<img src="Figures/CZU_perim_SCWatershed_crop_20210426.jpg"
+style="width:50.0%"
+alt="Fig. 1 Approximately 87% of the Scott Creek Watershed (yellow outline) was within the CZU Lightning Complex fire perimeter (red outline).)" />
+<figcaption aria-hidden="true">Fig. 1 Approximately 87% of the Scott
+Creek Watershed (yellow outline) was within the CZU Lightning Complex
+fire perimeter (red outline).)</figcaption>
+</figure>
+
+</center>
+
+The Scott Creek watershed is of special management concern as it
+supports the southernmost extant population of coho salmon
+(*Oncorhynchus kisutch*; Central California Coast \[CCC\] evolutionarily
+significant unit) in North America, as well as federally threatened CCC
+steelhead (anadramous *O. mykiss*). Scott Creek is also the location of
+a salmonid life cycle monitoring station operated jointly by NOAA’s
+Southwest Fisheries Science Center ([FED project
 website](https://www.fisheries.noaa.gov/west-coast/science-data/landscape-and-seascape-ecology-research-california-salmon))
 and the University of California, Santa Cruz Fisheries Collaboration
 Program ([FCP project
@@ -60,7 +71,17 @@ throughout the Scott Creek watershed since 2002 provides a unique
 opportunity to rigorously examine the direct and indirect effects of
 wildfire on salmonid productivity and carrying capacity.
 
-<img align="Right" width="300" height="200" src="Figures/Lagoon_lookingUS_20211130.jpg">
+<center>
+
+<figure>
+<img src="Figures/Lagoon_lookingUS_20211130.jpg" style="width:50.0%"
+alt="Fig. 2 Fine sediment deposited on the margins of the Scott Creek Estaury/Lagoon (Photo: November 2021)." />
+<figcaption aria-hidden="true">Fig. 2 Fine sediment deposited on the
+margins of the Scott Creek Estaury/Lagoon (Photo: November
+2021).</figcaption>
+</figure>
+
+</center>
 
 Water Year 2022 (WY22) brought multiple mass wasting events and flushing
 flows which brough large amounts of sediment into the creek. We believe
@@ -152,6 +173,8 @@ google-drive folder with a scan of the field notebook and photos can be
 found
 [here](https://drive.google.com/drive/folders/1rpwhRYAWUH1Ks09bCyMU0wZEBVVKS9QF?usp=sharing).
 
+<img align="Right" width="300" height="400" src="Figures/20220830_ESACP02C_test.jpg">
+
 Survey Notes:
 
 -   Survey Units: US Survey Ft;
@@ -223,7 +246,7 @@ the base station decide where it was “on the fly”. The raw base station
 file was extracted from the base station, converted to a RINEX file
 (<span style="color:purple">*Data/OPUS/72772420.o*</span>) and submitted
 to [OPUS](https://geodesy.noaa.gov/OPUS/). A pdf of the OPUS output can
-be found in the Data Folder.
+be found in the <span style="color:purple">*Data Folder*</span>.
 
 OPUS Output Notes:
 
@@ -294,10 +317,12 @@ Red.opus <- Red.dat %>%
 
 # 3. Correct echosounder point depths to account for “draft”.
 
+<img align="Right" width="300" height="300" src="Figures/Draft.jpg">
+
 The sounding instrument is mounted slightly into the water. This little
 bit of depth, known as “draft”, needs to be added to all of the depth
-values to get total water depth (feet). The instrument depth into the
-water was 0.650 feet.
+values to get total water depth (d in figure to the right). The draft =
+0.650 feet.
 
 ``` r
 
@@ -309,6 +334,11 @@ Red.draft <- Red.opus %>%
 ```
 
 # 4. Remove bad topo points and echo points that are too shallow or have low accuracy.
+
+Topo points were removed based on fieldnotes. Echosounder points were
+removed based on a vertical precision threshold between 0.09ft and
+sounding depths less than 1.3ft (the shallowest deoth a return could be
+detected by the sonarmite).
 
 ``` r
 
@@ -344,6 +374,8 @@ Red.cor <- Red.draft %>%
 
 # 5. Calculate bed surface elevation (BedSE) from echosounder points.
 
+BedSE is the OPUS corrected elevation plus draft corrected depth.
+
 ``` r
 
 ####Goal: Combine elevations with depth to get BedSE.
@@ -357,7 +389,10 @@ Red.cor2 <- Red.cor %>%
 # 6. Calculate water surface elevation (WaterSE) from echosounder points.
 
 Subtract draft (0.650 ft) from rod height to get water surface
-elevations for the echosounder points.
+elevations for the echosounder points. These points will give you a
+water surface refrence point (i.e., Z point) while wse points collected
+by the green unit indicated the bank wetted margin (i.e., X,Y,Z are
+important for creating the wetted boundary wihtin the lagoon).
 
 ``` r
 
@@ -394,6 +429,41 @@ RTKData <- full_join(Green.join, Red.cor3) %>%
 #Full corrected dataset:
 # write.table(RTKData, file = 'Data/Output_Data/OUT.FullDataset_Corrected_20221005.csv', sep = ',', row.names = F)
 ```
+
+Some summaries:
+
+``` r
+#Goal: Summarise point types and range of depths.
+
+RTKData.sum <- RTKData %>%
+  filter(Code != "cp01",
+         Code != "bridge",
+         Code != "cb01b",
+         Code != "hwymark",
+         Code != "cpx") %>% 
+  group_by(Code) %>% 
+  summarise(n())
+
+Depth.plot <- ggplot(RTKData, aes( x = Depth_cor)) +
+  geom_histogram(binwidth = .5)+
+  theme_classic() +
+  scale_x_continuous("Depth (ft)", limits = c(1,6), 
+                     breaks = c(1,2,3,4,5,6), 
+                     labels = c(1,2,3,4,5,6),
+                     expand = c(0,0))
+# ggsave("Figures/Depth_Histogram_20221006.jpg", width = 5, height = 3, units = "in", dpi = 650, device = "jpg")
+```
+
+<center>
+
+<figure>
+<img src="Figures/Depth_Histogram_20221006.jpg" style="width:50.0%"
+alt="Fig. X Histogram of echosounder depths after post-processing (Min = 1.66ft, Max =5.8ft )." />
+<figcaption aria-hidden="true">Fig. X Histogram of echosounder depths
+after post-processing (Min = 1.66ft, Max =5.8ft ).</figcaption>
+</figure>
+
+</center>
 
 # 8-10. in ArcMap (outside of R).
 
