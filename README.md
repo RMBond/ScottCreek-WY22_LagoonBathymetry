@@ -131,9 +131,8 @@ The general workflow is:
 ## Dataset Descriptions
 
 The <span style="color:purple">*Data*</span> folder contains all of the
-rtk datasets used in this repository. The <span
-style="color:purple">*Data/Output_Data*</span> subfolder contains all of
-the <span style="color:blue">*corected*</span> rtk datasets.
+rtk datasets used in this repository. The raw and output datasets can be
+found in their corresponding folders.
 
 *Uncorrected* Base Station Files:
 
@@ -167,11 +166,11 @@ the <span style="color:blue">*corected*</span> rtk datasets.
     and echosounder point) for making TIN and raster files in ArcMap.
     Note the WaterSE column has been removed (not needed).
 
-&. The <span
-style="color:purple">*OUT.WaterSurface_Corrected_20221007*</span>
-datafile is the *OPUS corrected* water surface input file (wse and
-echosounder point) for making TIN and raster files in ArcMap. Note the
-BedSE column has been removed (not needed).
+7.  The <span
+    style="color:purple">*OUT.WaterSurface_Corrected_20221007*</span>
+    datafile is the *OPUS corrected* water surface input file (wse and
+    echosounder point) for making TIN and raster files in ArcMap. Note
+    the BedSE column has been removed (not needed).
 
 <br>
 
