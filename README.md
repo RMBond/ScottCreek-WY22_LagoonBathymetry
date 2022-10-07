@@ -1,6 +1,6 @@
 WY22 Scott Creek Lagoon Bathymetric Survey
 ================
-06 October, 2022
+07 October, 2022
 
 -   <a href="#introduction" id="toc-introduction">Introduction</a>
 -   <a href="#workflow-summary" id="toc-workflow-summary">Workflow
@@ -26,9 +26,9 @@ WY22 Scott Creek Lagoon Bathymetric Survey
     href="#6-calculate-water-surface-elevation-waterse-from-echosounder-points"
     id="toc-6-calculate-water-surface-elevation-waterse-from-echosounder-points">6.
     Calculate water surface elevation (WaterSE) from echosounder points.</a>
--   <a href="#7-join-topo-and-echosounder-bedse-and-waterse-points"
-    id="toc-7-join-topo-and-echosounder-bedse-and-waterse-points">7. Join
-    topo and echosounder BedSE and WaterSE points.</a>
+-   <a href="#7-make-corrected-output-files"
+    id="toc-7-make-corrected-output-files">7. Make Corrected Output
+    Files.</a>
 -   <a href="#8-10-in-arcmap-outside-of-r"
     id="toc-8-10-in-arcmap-outside-of-r">8-10. in ArcMap (outside of R).</a>
 
@@ -83,7 +83,7 @@ margins of the Scott Creek Estaury/Lagoon (Photo: November
 
 </center>
 
-Water Year 2022 (WY22) brought multiple mass wasting events and flushing
+Water Year 2022 (WY22) had multiple mass wasting events and flushing
 flows which brough large amounts of sediment into the creek. We believe
 this sediment filled in pool habitat (reducing pool quantity, pool
 volume, and maximum pool depth). We also suspect sediment reached the
@@ -92,12 +92,11 @@ the channel bed (right figure shows fine sediment deposition in the
 estuary 30 November 2021). This repository focuses on data collected in
 the Scott Creek Estuary/Lagoon and a separate repository is dedicated to
 the [pool sediment survey
-data](https://drive.google.com/drive/u/1/folders/1GPUKNrafZbOOjcCcR4sZtiPQt50azaap).
-Our goal was to survey the lagoon habitat using RTK GPS and create a
-bathymetric surface. Ultimately we hope to track how this habitat
-changes over time and answer the question “How much has the Scott Creek
-estuary/lagoon filled in with fine sediment compared to pre-fire
-conditions?”.
+data](https://github.com/RMBond/ScottCreek-WY22_PoolSediment). Our goal
+was to survey the lagoon habitat using RTK GPS and create a bathymetric
+surface. Ultimately we hope to track how this habitat changes over time
+and answer the question “How much has the Scott Creek estuary/lagoon
+filled in with fine sediment compared to pre-fire conditions?”.
 
 # Workflow Summary
 
@@ -118,7 +117,7 @@ The general workflow is:
 
 6.  Calculate water surface elevation (WaterSE) from echosounder points.
 
-7.  Join topo and echosounder BedSE and WaterSE points.
+7.  Make Corrected Output Files.
 
 8.  Convert BSE points into TIN layer(in ArcMap).
 
@@ -155,12 +154,24 @@ the <span style="color:blue">*corected*</span> rtk datasets.
     echosounder points. The depth field was extracted by L. Harrison
     using Trimble Business Center software.
 
-<span style="color:blue">*Corrected*</span> Rover Files:
+<span style="color:blue">*OPUS Corrected*</span> Rover Files:
 
 5.  The <span
-    style="color:purple">*OUT.FullDataset_Corrected_20221005*</span>
-    datafile is the full (topo and echosounder) *corrected* dataset.
-    This output becomes the input file in ArcMap.
+    style="color:purple">*OUT.FullDataset_Corrected_20221007*</span>
+    datafile is the full (all rtk points) *OPUS corrected* dataset. It
+    can be used as a starting point for any analysis.
+
+6.  The <span
+    style="color:purple">*OUT.BedSurface_Corrected_20221007*</span>
+    datafile is the *OPUS corrected* bed surface input file (topo, wse,
+    and echosounder point) for making TIN and raster files in ArcMap.
+    Note the WaterSE column has been removed (not needed).
+
+&. The <span
+style="color:purple">*OUT.WaterSurface_Corrected_20221007*</span>
+datafile is the *OPUS corrected* water surface input file (wse and
+echosounder point) for making TIN and raster files in ArcMap. Note the
+BedSE column has been removed (not needed).
 
 <br>
 
@@ -288,14 +299,14 @@ options(digits = 10) #Global option so you can see the entire number for Northin
 #### Goal: Correct raw data with OPUS correction.
 
 #Read in RTK files
-Green.dat <- read.csv('data/SC_grn_220830.csv', sep = ",", header = T) # Topo points (362 obs, 5 var).
-Red.dat <- read.csv('data/SC_red_220830_withdepth.csv', sep = ",", header = T) # Echosounder points (117721 obs, 21 var).
+Green.dat <- read.csv('Data/Raw_Data/SC_grn_220830.csv', sep = ",", header = T) # Topo points (362 obs, 5 var).
+Red.dat <- read.csv('Data/Raw_Data/SC_red_220830_withdepth.csv', sep = ",", header = T) # Echosounder points (11772 obs, 21 var).
 
 #Make sure the data are loaded correctly
 str(Green.dat)
 str(Red.dat) #Looks Good.
 
-#Correct datasets:
+#OPUS Correct datasets:
 #Topo Points:
 Green.opus <- Green.dat %>% 
   mutate(North_cor = North + 6.557,
@@ -389,10 +400,10 @@ Red.cor2 <- Red.cor %>%
 # 6. Calculate water surface elevation (WaterSE) from echosounder points.
 
 Subtract draft (0.650 ft) from rod height to get water surface
-elevations for the echosounder points. These points will give you a
-water surface refrence point (i.e., Z point) while wse points collected
-by the green unit indicated the bank wetted margin (i.e., X,Y,Z are
-important for creating the wetted boundary wihtin the lagoon).
+elevations for the echosounder points. These points can be used as a
+water surface elevation refrence (i.e., Z point) while wse points
+collected by the green unit indicated the bank wetted margin (i.e.,
+X,Y,Z )are important for creating the wetted boundary wihtin the lagoon.
 
 ``` r
 
@@ -406,7 +417,7 @@ Red.cor3 <- Red.cor2 %>%
 # write.table(Red.cor3, file = 'Data/Output_Data/OUT.Red_Corrected_20221005.csv', sep = ',', row.names = F)
 ```
 
-# 7. Join topo and echosounder BedSE and WaterSE points.
+# 7. Make Corrected Output Files.
 
 ``` r
 
@@ -415,19 +426,43 @@ Red.cor3 <- Red.cor2 %>%
 #Pull out topo WSE points and put them into the WaterSE column.
 Green.cor.wse <- Green.cor %>%
   filter(Code == "wse") %>% 
-  mutate(WaterSE = BedSE) %>% 
-  select(-BedSE)#79 obs of 5 var.
+  mutate(WaterSE = BedSE) # Make bed = water surface elevation since this is the wetted margin (used for water surface layer TIN below).
+#79 obs of 6 var.
 
 Green.cor.topo <- Green.cor %>%
   filter(Code != "wse") #280 of 5 var.
 
 Green.join <- full_join(Green.cor.topo, Green.cor.wse) #rejoin topo points #359 obs of 6 var.
 
+#### OUTPUT - Full Dataset Output ####
 RTKData <- full_join(Green.join, Red.cor3) %>% 
   select(Point, North_cor, East_cor, BedSE, WaterSE, Depth_cor, Code, VertPrec) #join topo and echosounder points #11336 obs of 8 var.
 
 #Full corrected dataset:
-# write.table(RTKData, file = 'Data/Output_Data/OUT.FullDataset_Corrected_20221005.csv', sep = ',', row.names = F)
+# write.table(RTKData, file = 'Data/Output_Data/OUT.FullDataset_Corrected_20221007.csv', sep = ',', row.names = F)
+
+####  OUTPUT - Bed Surface TIN layer ####
+BedData <- RTKData %>%
+  filter(Code != "cp01",
+         Code != "bridge",
+         Code != "cb01b",
+         Code != "hwymark",
+         Code != "cpx") %>% #removing extra points that only matter to the base settup.
+  select(North_cor, East_cor, BedSE, Code, Point, VertPrec) #Don't need these columns for bed TIN.
+  
+#11331 obs of 6 var.
+  
+#Bed Surface Points Only (Topo, echo, and wse = basic channel bed TIN for making ArcMap raster)
+# write.table(BedData, file = 'Data/Output_Data/OUT.BedSurface_Corrected_20221007.csv', sep = ',', row.names = F)
+
+####  OUTPUT - Water Surface TIN layer ####
+
+WaterData <- RTKData %>%
+  filter(Code == "wse"| Code == "echo") %>% #only water points.
+  select(North_cor, East_cor, WaterSE, Code, Point, VertPrec) #11056 of 6 var.
+
+#Water Surface Points Only (wse and echo = basic water surface TIN for visualizing depths in ArcMap raster)
+# write.table(WaterData, file = 'Data/Output_Data/OUT.WaterSurface_Corrected_20221007.csv', sep = ',', row.names = F)
 ```
 
 Some summaries:
