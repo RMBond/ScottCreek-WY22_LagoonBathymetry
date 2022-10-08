@@ -26,9 +26,8 @@ WY22 Scott Creek Lagoon Bathymetric Survey
     href="#6-calculate-water-surface-elevation-waterse-from-echosounder-points"
     id="toc-6-calculate-water-surface-elevation-waterse-from-echosounder-points">6.
     Calculate water surface elevation (WaterSE) from echosounder points.</a>
--   <a href="#7-make-corrected-output-files"
-    id="toc-7-make-corrected-output-files">7. Make Corrected Output
-    Files.</a>
+-   <a href="#7-corrected-output-files" id="toc-7-corrected-output-files">7.
+    Corrected Output Files</a>
 -   <a href="#8-10-in-arcmap-outside-of-r"
     id="toc-8-10-in-arcmap-outside-of-r">8-10. in ArcMap (outside of R).</a>
 
@@ -345,10 +344,13 @@ Red.draft <- Red.opus %>%
 
 # 4. Remove bad topo points and echo points that are too shallow or have low accuracy.
 
-Topo points were removed based on fieldnotes. Echosounder points were
-removed based on a vertical precision threshold between 0.09ft and
-sounding depths less than 1.3ft (the shallowest deoth a return could be
-detected by the sonarmite).
+Point filters:
+
+-   Topo points were removed based on fieldnotes.
+
+-   Echosounder points were removed based on a vertical precision
+    threshold = 0.09ft and sounding depths less than 1.3ft (the
+    shallowest depth a return could be detected by the sonarmite).
 
 ``` r
 
@@ -384,7 +386,7 @@ Red.cor <- Red.draft %>%
 
 # 5. Calculate bed surface elevation (BedSE) from echosounder points.
 
-BedSE is the OPUS corrected elevation plus draft corrected depth.
+BedSE = OPUS corrected elevation + draft corrected depth.
 
 ``` r
 
@@ -398,11 +400,16 @@ Red.cor2 <- Red.cor %>%
 
 # 6. Calculate water surface elevation (WaterSE) from echosounder points.
 
-Subtract draft (0.650 ft) from rod height to get water surface
-elevations for the echosounder points. These points can be used as a
-water surface elevation refrence (i.e., Z point) while wse points
-collected by the green unit indicated the bank wetted margin (i.e.,
-X,Y,Z )are important for creating the wetted boundary wihtin the lagoon.
+Water SE (for the echosounder points) = Elevation_cor - draft (0.650
+ft).
+
+-   Echosounder points can be used as water surface elevation refrences
+    (i.e., Z point used in water surface TIN).
+
+-   “wse” points (collected by the green rover) indicated the wetted
+    margin on the bank (i.e., X,Y,Z can be used in bed and water surface
+    TINs). The wse points are important for creating the wetted boundary
+    wihtin the lagoon.
 
 ``` r
 
@@ -416,7 +423,7 @@ Red.cor3 <- Red.cor2 %>%
 # write.table(Red.cor3, file = 'Data/Output_Data/OUT.Red_Corrected_20221005.csv', sep = ',', row.names = F)
 ```
 
-# 7. Make Corrected Output Files.
+# 7. Corrected Output Files
 
 ``` r
 
